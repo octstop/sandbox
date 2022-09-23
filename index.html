@@ -1,1 +1,58 @@
-hello sandbox thankyou
+<!DOCTYPE html>
+<html>
+<script>
+function getPhonetic(word) {
+  //スペースや改行などの特殊文字はすべて取り除く
+  word = word.replace(/[\r\n\t\s]+/g, "");
+  alert(word);
+  //よみたんAPIのリクエストURLによみがなを取得したい文字をパラメータに付与
+  let url = "https://yomi-tan.jp/api/yomi.php?ic=UTF-8&oc=UTF-8&k=h&n=3&t=" + word;
+  alert(url);
+  //よみたんAPIにhttp getで漢字のよみがなをリクエストし、3つの応答結果のうち1個目を取得
+  // url = 'https://www.google.co.jp/';
+  // let phonetic = UrlFetchApp.fetch(url).getContentText();
+  var phonetic = "";
+  url = "https://gray-code.com/js_sample/ajax11.html";
+  alert(url);
+  try {
+  alert('before fetch');
+  fetch(url) // (1) リクエスト送信
+  .then(response => response.text()) // (2) レスポンスデータを取得
+  .then(data => { // (3)レスポンスデータを処理
+    /*
+    const parser = new DOMParser();
+    phonetic = parser.parseFromString(data, "text/html");  });
+    */
+    alert(data + 'a');
+    alert('data');
+  }
+  catch (e) {
+    alert('catch' + e);
+  }  
+
+  //スプレッドシートのカスタム関数によみがなを返却
+  return phonetic;
+}
+
+function addText() {
+  var add_text = document.getElementById('selectAddText').value;
+  var pos = add_text.indexOf(':');
+  alert(add_text);
+  alert(add_text.slice(pos + 2));
+  var kana = getPhonetic('明日は部活があります。');
+  alert('kana: ' + kana);
+  document.getElementById('textareaMain').value = add_text + ' ' + kana;
+}
+</script>
+  <head>
+    <base target="_top">
+  </head>
+  <body>
+    <select id="selectAddText">
+      <option>先生: sensei</option>
+      <option>二中: 2chu</option>
+    </select>
+    <button onclick="addText()">追加</button>
+    <textarea id="textareaMain"></textarea>
+  </body>
+</html>
